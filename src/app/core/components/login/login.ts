@@ -32,45 +32,7 @@ import { filter } from 'rxjs';
   ],
   selector: 'app-login',
   styleUrl: './login.css',
-  // templateUrl: './login.html',
-  template: `
-    <mat-card appearance="outlined" class="login-card">
-      <mat-card-header>
-        <p>Login page</p>
-      </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="loginForm" (submit)="onSubmit()" class="login-form">
-          <mat-form-field>
-            <mat-label>Login</mat-label>
-            <input matInput formControlName="login" />
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input
-              matInput
-              [type]="hidePassword() ? 'password' : 'text'"
-              formControlName="password"
-            />
-            <button
-              matIconButton
-              matSuffix
-              (click)="toggleHide($event)"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hidePassword()"
-            >
-              <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-          </mat-form-field>
-          <button matButton="filled" type="submit" [disabled]="loginForm.hasError('emptyFields')">
-            Log In
-          </button>
-        </form>
-        @if (loginForm.hasError('mismatchedCredentials') && isInvalid()) {
-          <mat-error>Invalid login or password</mat-error>
-        }
-      </mat-card-content>
-    </mat-card>
-  `,
+  templateUrl: './login.html',
 })
 export class Login {
   auth = inject(AuthService);
@@ -100,7 +62,6 @@ export class Login {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.isInvalid.set(false);
       this.auth.logIn();
     } else {
       this.isInvalid.set(true);
