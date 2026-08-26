@@ -8,11 +8,15 @@ export class AuthService {
 
   isLoggedIn = signal<boolean>(localStorage.getItem(this.LOCALSTORAGE_KEY) === 'true');
 
+  navigateToHomePage(): void {
+    this.router.navigate(['/']);
+  }
+
   logIn(): void {
     localStorage.setItem(this.LOCALSTORAGE_KEY, 'true');
     this.isLoggedIn.set(true);
 
-    this.router.navigate(['/']);
+    this.navigateToHomePage();
   }
 
   logOut(): void {

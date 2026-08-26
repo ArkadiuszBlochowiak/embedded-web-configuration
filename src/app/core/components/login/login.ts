@@ -15,6 +15,7 @@ import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { formValidator } from '../../services/login.validator';
 import { filter } from 'rxjs';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   imports: [
@@ -29,6 +30,7 @@ import { filter } from 'rxjs';
     MatIcon,
     MatSuffix,
     MatError,
+    MatTooltip,
   ],
   selector: 'app-login',
   styleUrl: './login.css',

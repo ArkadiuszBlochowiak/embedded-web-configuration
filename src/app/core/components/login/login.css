@@ -13,3 +13,15 @@
   display: flex;
   flex-direction: column;
 }
+
+.login-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.login-info-actions {
+  display: flex;
+  gap: 8px;
+}
