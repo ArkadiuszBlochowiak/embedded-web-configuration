@@ -61,9 +61,11 @@ import { filter } from 'rxjs';
               <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
           </mat-form-field>
-          <button matButton="filled" type="submit">Log In</button>
+          <button matButton="filled" type="submit" [disabled]="loginForm.hasError('emptyFields')">
+            Log In
+          </button>
         </form>
-        @if (loginForm.hasError('missmatchedCredentials') && isInvalid()) {
+        @if (loginForm.hasError('mismatchedCredentials') && isInvalid()) {
           <mat-error>Invalid login or password</mat-error>
         }
       </mat-card-content>

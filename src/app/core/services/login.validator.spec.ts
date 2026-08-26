@@ -24,4 +24,22 @@ describe('LoginValidator', () => {
       mismatchedCredentials: true,
     });
   });
+
+  it('should return emptyFields error if any field is empty', () => {
+    const form = createForm('test', '');
+    const validatorResult = formValidator(form);
+
+    expect(validatorResult).toEqual({
+      emptyFields: true,
+    });
+  });
+
+  it('should return emptyFields error if both fields are empty', () => {
+    const form = createForm('', '');
+    const validatorResult = formValidator(form);
+
+    expect(validatorResult).toEqual({
+      emptyFields: true,
+    });
+  });
 });

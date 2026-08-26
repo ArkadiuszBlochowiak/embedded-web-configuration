@@ -9,14 +9,16 @@ export const formValidator: ValidatorFn = (
   const password = control.get('password')?.value?.trim().toLowerCase();
 
   if (!login || !password) {
-    return null;
+    return {
+      emptyFields: true,
+    };
   }
 
   const isCorrect = login === LOGIN_CREDENTIAL;
 
   if (!isCorrect) {
     return {
-      missmatchedCredentials: true,
+      mismatchedCredentials: true,
     };
   }
 
