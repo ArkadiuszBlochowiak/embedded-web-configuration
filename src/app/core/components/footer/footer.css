@@ -1,0 +1,11 @@
+.app-footer {
+  display: flex;
+  justify-content: center;
+  padding-block: 1em;
+  gap: 4px;
+}
+
+.app-footer a {
+  text-decoration: none;
+  color: var(--mat-sys-primary);
+}
