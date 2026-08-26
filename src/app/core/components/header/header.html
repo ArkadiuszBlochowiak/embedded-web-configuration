@@ -1,1 +1,7 @@
-<p>header works!</p>
+<mat-toolbar>
+  <mat-icon fontIcon="build"></mat-icon>
+  <span class="header-title">Embedded web configuration platform</span>
+  @if (!isLoginPageActive() && auth.isLoggedIn()) {
+    <button (click)="auth.logOut()" matButton="tonal">Log out</button>
+  }
+</mat-toolbar>
