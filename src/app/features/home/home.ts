@@ -4,6 +4,7 @@ import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { FormInput } from '../../shared/components/form-input/form-input';
+import { ipAddressValidator } from './services/settings.validator';
 
 @Component({
   imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatButton, FormInput],
@@ -33,17 +34,12 @@ import { FormInput } from '../../shared/components/form-input/form-input';
   `,
 })
 export class Home {
-  deviceName = new FormControl('', {
-    nonNullable: true,
-    validators: [Validators.minLength(3), Validators.maxLength(255), Validators.required],
-  });
-
   settingsForm = new FormGroup({
     deviceName: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)],
     }),
-    ipAddress: new FormControl('', [Validators.required]),
+    ipAddress: new FormControl('', [Validators.required, ipAddressValidator]),
     subnetMask: new FormControl(''),
     gateway: new FormControl(''),
     dhcpMode: new FormControl(''),

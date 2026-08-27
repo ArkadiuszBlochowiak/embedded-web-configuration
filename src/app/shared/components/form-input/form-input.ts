@@ -27,6 +27,10 @@ export class FormInput {
       return `The minimum length is ${requiredLength} characters`;
     }
 
+    if (errors['wrongAddressFormat']) {
+      return 'Provide proper IP address format';
+    }
+
     return 'Invalid input';
   }
 }
