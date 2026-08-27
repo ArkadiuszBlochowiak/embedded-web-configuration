@@ -4,7 +4,7 @@ import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { FormInput } from '../../shared/components/form-input/form-input';
-import { ipAddressValidator } from './services/settings.validator';
+import { ipAddressValidator, submaskValidator } from './services/settings.validator';
 
 @Component({
   imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatButton, FormInput],
@@ -17,10 +17,7 @@ import { ipAddressValidator } from './services/settings.validator';
       <app-form-input [field]="settingsForm.controls.deviceName" label="Device name" />
       <span>Advanced settings</span>
       <app-form-input [field]="settingsForm.controls.ipAddress" label="IP address" />
-      <mat-form-field>
-        <mat-label>Subnet mask</mat-label>
-        <input matInput />
-      </mat-form-field>
+      <app-form-input [field]="settingsForm.controls.subnetMask" label="Subnet mask" />
       <mat-form-field>
         <mat-label>Gateway</mat-label>
         <input matInput />
@@ -40,7 +37,7 @@ export class Home {
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)],
     }),
     ipAddress: new FormControl('', [Validators.required, ipAddressValidator]),
-    subnetMask: new FormControl(''),
+    subnetMask: new FormControl('', [Validators.required, submaskValidator]),
     gateway: new FormControl(''),
     dhcpMode: new FormControl(''),
   });

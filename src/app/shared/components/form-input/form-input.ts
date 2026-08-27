@@ -31,6 +31,10 @@ export class FormInput {
       return 'Provide proper IP address format';
     }
 
+    if (errors['wrongSubmaskFormat']) {
+      return 'Provide proper subnet mask format';
+    }
+
     return 'Invalid input';
   }
 }

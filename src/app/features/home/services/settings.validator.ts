@@ -1,10 +1,8 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { ValidationError } from '@angular/forms/signals';
 
 export const ipAddressValidator: ValidatorFn = (
   control: AbstractControl<string>,
 ): ValidationErrors | null => {
-  console.log(control.value);
   const address = control.value;
   const regex = /^(((?!25?[6-9])[12]\d|[1-9])?\d\.?\b){4}$/;
 
@@ -15,6 +13,26 @@ export const ipAddressValidator: ValidatorFn = (
   if (!isAddressCorrect) {
     return {
       wrongAddressFormat: true,
+    };
+  }
+
+  return null;
+};
+
+export const submaskValidator: ValidatorFn = (
+  control: AbstractControl<string>,
+): ValidationErrors | null => {
+  const submask = control.value;
+  const regex =
+    /^(255)\.(0|128|192|224|240|248|252|254|255)\.(0|128|192|224|240|248|252|254|255)\.(0|128|192|224|240|248|252|254|255)/;
+
+  if (!submask) return null;
+
+  const isSubmaskCorrect = regex.test(submask);
+
+  if (!isSubmaskCorrect) {
+    return {
+      wrongSubmaskFormat: true,
     };
   }
 
