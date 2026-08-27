@@ -1,0 +1,12 @@
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+}
+
+.settings-form__group {
+  display: flex;
+  flex-direction: column;
+  margin-block: 8px;
+  gap: 4px;
+}
