@@ -60,6 +60,7 @@ export class Login {
   toggleHide(event: MouseEvent) {
     this.hidePassword.set(!this.hidePassword());
     event.stopPropagation();
+    event.preventDefault();
   }
 
   onSubmit() {
