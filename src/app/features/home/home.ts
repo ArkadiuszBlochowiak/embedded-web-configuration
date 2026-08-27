@@ -1,16 +1,60 @@
-import { Component, inject } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 @Component({
-  imports: [],
+  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatButton],
   selector: 'app-home',
   styleUrl: './home.css',
   // templateUrl: './home.html',
   template: `
-    <p>Home page</p>
-    <button (click)="auth.logOut()">Log out</button>
+    <form [formGroup]="settingsForm" (submit)="onSubmit()" class="settings-form">
+      <span>General settings</span>
+      <mat-form-field>
+        <mat-label>Device name</mat-label>
+        <input matInput [formControl]="deviceName" />
+      </mat-form-field>
+      <span>Advanced settings</span>
+      <mat-form-field>
+        <mat-label>IP address</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Subnet mask</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Gateway</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>DHCP mode (select)</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <button matButton="outlined" type="submit">Save</button>
+    </form>
   `,
 })
 export class Home {
-  auth = inject(AuthService);
+  deviceName = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.minLength(3), Validators.maxLength(255), Validators.required],
+  });
+
+  settingsForm = new FormGroup({
+    deviceName: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+    }),
+    ipAddress: new FormControl('', [Validators.required]),
+    subnetMask: new FormControl(''),
+    gateway: new FormControl(''),
+    dhcpMode: new FormControl(''),
+  });
+
+  onSubmit() {
+    console.log(this.settingsForm.value);
+  }
 }
