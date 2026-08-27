@@ -3,24 +3,19 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
+import { FormInput } from '../../shared/components/form-input/form-input';
 
 @Component({
-  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatButton],
+  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatButton, FormInput],
   selector: 'app-home',
   styleUrl: './home.css',
   // templateUrl: './home.html',
   template: `
     <form [formGroup]="settingsForm" (submit)="onSubmit()" class="settings-form">
       <span>General settings</span>
-      <mat-form-field>
-        <mat-label>Device name</mat-label>
-        <input matInput [formControl]="deviceName" />
-      </mat-form-field>
+      <app-form-input [field]="settingsForm.controls.deviceName" label="Device name" />
       <span>Advanced settings</span>
-      <mat-form-field>
-        <mat-label>IP address</mat-label>
-        <input matInput />
-      </mat-form-field>
+      <app-form-input [field]="settingsForm.controls.ipAddress" label="IP address" />
       <mat-form-field>
         <mat-label>Subnet mask</mat-label>
         <input matInput />

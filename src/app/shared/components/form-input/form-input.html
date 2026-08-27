@@ -1,0 +1,7 @@
+<mat-form-field class="form-input">
+  <mat-label>{{ label() }}</mat-label>
+  <input matInput [formControl]="field()" />
+  @if (errorMessage()) {
+    <mat-error>{{ errorMessage() }}</mat-error>
+  }
+</mat-form-field>
