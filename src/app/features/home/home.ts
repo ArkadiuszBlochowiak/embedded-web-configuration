@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { FormInput } from '../../shared/components/form-input/form-input';
 import { ipAddressValidator, submaskValidator } from './services/settings.validator';
 import { MatSelect, MatOption } from '@angular/material/select';
@@ -35,7 +34,7 @@ import { MatSelect, MatOption } from '@angular/material/select';
           <mat-option value="disabled">Disabled</mat-option>
         </mat-select>
       </mat-form-field>
-      <button matButton="outlined" type="submit">Save</button>
+      <button matButton="outlined" type="submit" [disabled]="settingsForm.invalid">Save</button>
     </form>
   `,
 })
