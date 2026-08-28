@@ -7,6 +7,7 @@ import { FormInput } from '../../../../shared/components/form-input/form-input';
 import { ipAddressValidator, submaskValidator } from '../../services/settings.validator';
 import { SettingsService } from '../../services/settings.service';
 import { SettingsData } from '../../settings-info';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   imports: [
@@ -24,6 +25,8 @@ import { SettingsData } from '../../settings-info';
 })
 export class SettingsForm {
   settingsService = inject(SettingsService);
+  snackBar = inject(MatSnackBar);
+
   initialSettings = input<SettingsData | null>(null);
 
   settingsForm = new FormGroup({
@@ -55,9 +58,15 @@ export class SettingsForm {
     }
   }
 
-  onSubmit() {
-    console.log(this.settingsForm.value);
+  openSnackBar() {
+    this.snackBar.open('Changes saved successfully!', '', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
 
+  onSubmit() {
     const model: SettingsData = {
       deviceName: this.settingsForm.value.deviceName ?? '',
       ipAddress: this.settingsForm.value.ipAddress ?? '',
@@ -68,6 +77,7 @@ export class SettingsForm {
 
     this.settingsService.saveSettings(model).then((data: SettingsData) => {
       this.updateModel(data);
+      this.openSnackBar();
     });
   }
 }
