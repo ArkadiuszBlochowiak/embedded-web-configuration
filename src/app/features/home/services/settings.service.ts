@@ -3,7 +3,7 @@ import { SettingsData } from '../settings-info';
 
 @Service()
 export class SettingsService {
-  protected url = 'http://localhost:3000/settings';
+  protected url = '/api/settings';
 
   async delay() {
     return new Promise((resolve) => {
@@ -14,7 +14,17 @@ export class SettingsService {
   async getSettings(): Promise<SettingsData> {
     await this.delay();
 
-    const data = await fetch(this.url);
-    return (await data.json()) || {};
+    const response = await fetch(this.url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error ${response.status}: ${response.statusText}`);
+    }
+
+    return (await response.json()) || {};
+  }
+
+  async saveSettings(data: SettingsData) {
+    const response = await fetch(this.url, { method: 'PUT', body: JSON.stringify(data) });
+    return (await response.json()) || {};
   }
 }

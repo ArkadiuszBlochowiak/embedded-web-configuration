@@ -27,28 +27,47 @@ export class SettingsForm {
   initialSettings = input<SettingsData | null>(null);
 
   settingsForm = new FormGroup({
-    deviceName: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)],
-    }),
+    deviceName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(255),
+    ]),
     ipAddress: new FormControl('', [Validators.required, ipAddressValidator]),
     subnetMask: new FormControl('', [Validators.required, submaskValidator]),
     gateway: new FormControl('', [Validators.required, ipAddressValidator]),
     dhcpMode: new FormControl(false),
   });
 
+  updateModel(data: SettingsData) {
+    this.settingsForm.controls.deviceName.setValue(data.deviceName || '');
+    this.settingsForm.controls.ipAddress.setValue(data.ipAddress || '');
+    this.settingsForm.controls.subnetMask.setValue(data.subnetMask || '');
+    this.settingsForm.controls.gateway.setValue(data.gateway || '');
+    this.settingsForm.controls.dhcpMode.setValue(Boolean(data.dhcpMode) || false);
+  }
+
   ngOnChanges(changes: SimpleChanges<SettingsForm>) {
-    if (changes.initialSettings && changes.initialSettings !== null) {
+    if (changes.initialSettings) {
       const init = changes.initialSettings.currentValue;
-      this.settingsForm.controls.deviceName.setValue(init?.deviceName || '');
-      this.settingsForm.controls.ipAddress.setValue(init?.ipAddress || '');
-      this.settingsForm.controls.subnetMask.setValue(init?.subnetMask || '');
-      this.settingsForm.controls.gateway.setValue(init?.gateway || '');
-      this.settingsForm.controls.dhcpMode.setValue(Boolean(init?.dhcpMode) || false);
+      if (init !== null) {
+        this.updateModel(init);
+      }
     }
   }
 
   onSubmit() {
     console.log(this.settingsForm.value);
+
+    const model: SettingsData = {
+      deviceName: this.settingsForm.value.deviceName ?? '',
+      ipAddress: this.settingsForm.value.ipAddress ?? '',
+      subnetMask: this.settingsForm.value.subnetMask ?? '',
+      gateway: this.settingsForm.value.gateway ?? '',
+      dhcpMode: this.settingsForm.value.dhcpMode ?? false,
+    };
+
+    this.settingsService.saveSettings(model).then((data: SettingsData) => {
+      this.updateModel(data);
+    });
   }
 }
