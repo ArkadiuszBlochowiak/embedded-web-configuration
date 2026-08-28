@@ -14,6 +14,11 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
       <div class="home-loading">
         <mat-progress-spinner mode="indeterminate" />
       </div>
+    } @else if (dataError() !== '') {
+      <div class="home-error">
+        <h3>Something went wrong. Try again</h3>
+        <p>{{ dataError() }}</p>
+      </div>
     } @else {
       <app-settings-form [initialSettings]="initialSettings()" />
     }
@@ -25,13 +30,22 @@ export class Home {
   settingsService = inject(SettingsService);
   initialSettings = signal<SettingsData | null>(null);
   isLoading = signal(false);
+  dataError = signal('');
 
   constructor() {
     this.isLoading.set(true);
-    this.settingsService.getSettings().then((data: SettingsData) => {
-      this.initialSettings.set(data);
-      this.isLoading.set(false);
-      console.log(this.initialSettings());
-    });
+    this.settingsService
+      .getSettings()
+      .then(
+        (data: SettingsData) => {
+          this.initialSettings.set(data);
+        },
+        (error: Error) => {
+          this.dataError.set(error.message);
+        },
+      )
+      .finally(() => {
+        this.isLoading.set(false);
+      });
   }
 }

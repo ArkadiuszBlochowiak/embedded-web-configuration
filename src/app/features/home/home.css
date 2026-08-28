@@ -4,6 +4,7 @@
   justify-content: center;
 }
 
-.home-loading {
+.home-loading,
+.home-error {
   align-self: center;
 }
