@@ -13,16 +13,24 @@ describe('ipAddressValidator', () => {
     expect(validatorResult).toBeNull();
   });
 
-  test('should return null if address is in correct format', () => {
+  const validTestCases = ['192.168.1.1', '192.128.64.32', '1.1.1.1', '192.64.128.128', '0.0.0.0'];
+
+  test.for(validTestCases)('should return null if address (%s) is in correct format', () => {
     const field = createField('192.168.1.1');
     const validatorResult = ipAddressValidator(field);
 
     expect(validatorResult).toBeNull();
   });
 
-  const testCases = ['192.168.11', '192.168..11', '192.168..300', '192168111', '192..168.11'];
+  const invalidTestCases = [
+    '192.168.11',
+    '192.168..11',
+    '192.168..300',
+    '192168111',
+    '192..168.11',
+  ];
 
-  test.for(testCases)('should return error if address (%s) is in wrong format', () => {
+  test.for(invalidTestCases)('should return error if address (%s) is in wrong format', () => {
     const field = createField('192.168.11');
     const validatorResult = ipAddressValidator(field);
 
@@ -51,7 +59,7 @@ describe('submaskValidator', () => {
     expect(validatorResult).toBeNull();
   });
 
-  const testCases = ['255.255.128.1', '255.255.1.1', '255.255.128', '255.255.128', '255.1.0.0'];
+  const testCases = ['255.255.128.1', '255.255.1.1', '255.255.128', '255.1.255.128', '255.1.0.0'];
 
   test.for(testCases)('should return error if submask (%s) is in wrong format', () => {
     const field = createField('255.255.128.1');
