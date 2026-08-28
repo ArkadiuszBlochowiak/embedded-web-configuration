@@ -11,8 +11,8 @@
     <mat-form-field>
       <mat-label>DHCP mode</mat-label>
       <mat-select [formControl]="settingsForm.controls.dhcpMode">
-        <mat-option value="enabled">Enabled</mat-option>
-        <mat-option value="disabled">Disabled</mat-option>
+        <mat-option [value]="true">Enabled</mat-option>
+        <mat-option [value]="false">Disabled</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
